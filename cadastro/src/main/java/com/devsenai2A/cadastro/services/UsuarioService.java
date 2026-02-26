@@ -21,4 +21,19 @@ public class UsuarioService {
     public Usuario cadastrar(Usuario usuario) {
         return repository.save(usuario);
     }
+
+public Usuario login(String email, String senha) {
+
+    Usuario usuario = repository.findByEmail(email);
+
+    if (usuario == null) {
+        return null;
+    }
+
+    if (usuario.getSenha().equals(senha)) {
+        return usuario;
+    }
+
+    return null;
+}
 }
