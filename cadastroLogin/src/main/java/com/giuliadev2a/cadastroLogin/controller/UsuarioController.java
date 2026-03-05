@@ -6,11 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.giuliadev2a.cadastroLogin.entities.Usuario;
 import com.giuliadev2a.cadastroLogin.services.UsuarioService;
@@ -48,4 +44,17 @@ public class UsuarioController {
 
         return ResponseEntity.ok(usuario);
     }
+
+    @PutMapping("/{id}")
+    public Usuario update(@PathVariable Long Id, @RequestBody Usuario user) {
+        user.setId(Id); // isso aqui faltava pqp vai tomar no cu coida maldita desgraçada do crlh vai se fuder espero que que m inventou essa porra queime no inferno
+        return Usuario.update(Id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
+    }
+
+
 }

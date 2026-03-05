@@ -3,6 +3,7 @@ package com.giuliadev2a.cadastroLogin.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.giuliadev2a.cadastroLogin.entities.Usuario;
@@ -12,7 +13,18 @@ import com.giuliadev2a.cadastroLogin.repositories.UsuarioRepository;
 public class UsuarioService {
 
     @Autowired
-    private UsuarioRepository repository;
+    private final UsuarioRepository repository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UsuarioService(PasswordEncoder passwordEncoder, UsuarioRepository repository) {
+        this.passwordEncoder = passwordEncoder;
+        this.repository = repository;
+
+    }
+
+    public void delete(Long Id) {
+        repository.deleteById(Id);
+    }
 
     public List<Usuario> listarTodos(){
         return repository.findAll();
@@ -35,5 +47,10 @@ public class UsuarioService {
         }
 
         return null;
+    }
+
+    public Usuario save(Usuario usuario) {
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        return repository.save(usuario);
     }
 }
